@@ -1,0 +1,65 @@
+{% extends 'base/base.html' %}
+
+
+{% block content %}
+
+<table class="table table-bordered">
+		<thead>
+			<tr>
+	              <td>#</td>
+				  <td>nombre</td>
+                  <td>telefono_contacto</td>
+				  <td>lugar_de_partida</td>
+				  <td>destino</td>
+				  <td>fecha</td>
+				  <td>hora</td>
+				  <td>asientos_disponibles</td>
+				  <td>costo</td>
+		          <td>acciones</td>
+			</tr>
+
+	</thead>
+	<tbody>
+        {% if object_list %}
+        {% for ofrecer_viaje in object_list %}
+		<tr>
+					<td>{{ ofrecer_viaje.id }}</td>
+					<td>{{ ofrecer_viaje.nombre }}</td>
+					<td>{{ofrecer_viaje.telefono_contacto}}</td>
+					<td>{{ofrecer_viaje.lugar_de_partida}}</td>
+					<td>{{ofrecer_viaje.destino}}</td>
+					<td>{{ ofrecer_viaje.fecha }}</td>
+					<td>{{ ofrecer_viaje.hora }}</td>
+					<td>{{ ofrecer_viaje.asientos_disponibles }}</td>
+					<td>{{ ofrecer_viaje.costo }}</td>
+					<td>{{ ofrecer_viaje.persona.nombre }}</td>
+					<td>
+						 <a class="btn btn-primary" href="{% url 'ofrecerviaje_editar' ofrecer_viaje.id %}">Editar</a>
+						 <a class="btn btn-danger" href="{% url 'viaje_eliminar' ofrecer_viaje.id %}">Eliminar</a>
+
+					</td>			
+
+		</tr>
+		{% endfor %}
+
+	    {% else %}
+		<h1>No hay Registros de Viajes </h1>
+		{% endif %}
+	</ tbody >
+</ table >
+<ul class="pager">
+	<li>
+
+		{% if page_obj.has_previous %}
+       	 <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+		{% endif %}
+        </li>
+	<li>
+		{% if page_obj.has_next %}
+     	 <a href="?page={{ page_obj.next_page_number }}">Next</a>
+    	{% endif %}
+    </li>
+</ul>
+
+{% endblock %}
+
